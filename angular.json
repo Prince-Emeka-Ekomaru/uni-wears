@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "uni-wears"
+    }
+  },
+  "defaultProject": "uni-wears",
+  "cli": {
+    "analytics": "943337d2-b6db-4fbd-ae40-ed7509f05b13"
+  }
 }

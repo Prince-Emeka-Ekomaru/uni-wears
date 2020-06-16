@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Uproduct } from './product';
 
 @Component({
   selector: 'app-product-list',
@@ -8,8 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class ProductListComponent implements OnInit {
   pageTitle: string = 'Product List';
   showImage: boolean = false;
-  listFilter: string = 'cart';
-  products: any[] = [
+ _listFilter: string;
+
+  get listFilter(): string {
+    return this._listFilter;
+  }
+
+  set listFilter(value:string){
+    this._listFilter = value;
+    this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+  }
+
+  filteredProducts: Uproduct[];
+
+  products: Uproduct[] = [
     {
       'productId': 2,
       'productName': 'Golf Shoe',
@@ -88,10 +101,19 @@ export class ProductListComponent implements OnInit {
     }
   ];
 
+  performFilter(filterBy: string): Uproduct[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.products.filter((product: Uproduct) =>
+    product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1)
+  }
+
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
-  constructor() { }
+  constructor() {
+    this.filteredProducts = this.products;
+    this.listFilter = '';
+  }
 
   ngOnInit(): void {
   }
